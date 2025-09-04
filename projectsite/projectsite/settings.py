@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xz=6tlaw1xnyn2cl*du_(*80zjrtg4ztbi_!g$%t3kwa504gfq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://www.pythonanywhere.com/user/Luvna/', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'studentorg'
 ]
 
 MIDDLEWARE = [
