@@ -20,10 +20,10 @@ class Command(BaseCommand):
 
         for _ in range(count):
             Task.objects.create(
-                title=fake.sentence(nb_words=5),                  # Task title
-                description=fake.paragraph(nb_sentences=3),       # Task description
-                status=fake.random_element(elements=statuses),    # Task status
-                deadline=timezone.make_aware(fake.date_time_this_month()),  # Deadline
+                title=fake.sentence(nb_words=5),                  
+                description=fake.paragraph(nb_sentences=3),       
+                status=fake.random_element(elements=statuses),    
+                deadline=timezone.make_aware(fake.date_time_this_month()),  
                 category=Category.objects.order_by("?").first(),
                 priority=Priority.objects.order_by("?").first(),
             )

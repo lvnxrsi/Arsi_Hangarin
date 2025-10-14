@@ -1,13 +1,11 @@
 from django.db import models
 
-
 class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)  
-    updated_at = models.DateTimeField(auto_now=True)  
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        abstract = True  
-
+        abstract = True
 
 
 STATUS_CHOICES = [
@@ -16,19 +14,15 @@ STATUS_CHOICES = [
     ("Completed", "Completed"),
 ]
 
-
-
 class Category(BaseModel):
     name = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = "Category"
-        verbose_name_plural = "Categories"  
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
-
-
 
 class Priority(BaseModel):
     name = models.CharField(max_length=100)
@@ -41,24 +35,25 @@ class Priority(BaseModel):
         return self.name
 
 
-
 class Task(BaseModel):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     status = models.CharField(
         max_length=50,
         choices=STATUS_CHOICES,
-        default="Pending"   
+        default="Pending"
     )
     deadline = models.DateTimeField(null=True, blank=True)
-    priority = models.ForeignKey(Priority, on_delete=models.PROTECT, related_name="tasks")
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="tasks")
+    priority = models.ForeignKey(
+        Priority, on_delete=models.PROTECT, related_name="tasks"
+    )
+    category = models.ForeignKey(
+        Category, on_delete=models.PROTECT, related_name="tasks"
+    )
 
     def __str__(self):
         return self.title
 
-
-# 🔹 SubTask model
 class SubTask(BaseModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="subtasks")
     title = models.CharField(max_length=200)
@@ -72,10 +67,10 @@ class SubTask(BaseModel):
         return self.title
 
 
-# 🔹 Note model
 class Note(BaseModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="notes")
     content = models.TextField()
 
     def __str__(self):
+    
         return (self.content[:47] + "...") if len(self.content) > 50 else self.content

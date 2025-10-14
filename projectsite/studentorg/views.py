@@ -1,3 +1,146 @@
-from django.shortcuts import render
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from studentorg.models import Task, Note, SubTask, Category
+from studentorg.forms import TaskForm, NoteForm, SubTaskForm
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.db.models import Q
 
-# Create your views here.
+
+class HomePageView(ListView):
+    model = Task
+    context_object_name = "tasks"
+    template_name = "home.html"
+    ordering = ["-created_at"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_tasks"] = Task.objects.count()
+        context["completed_tasks"] = Task.objects.filter(status="Completed").count()
+        context["in_progress_tasks"] = Task.objects.filter(status="In Progress").count()
+        context["pending_tasks"] = Task.objects.filter(status="Pending").count()
+        context["today"] = timezone.now().date()
+        return context
+
+
+class TaskListView(ListView):
+    model = Task
+    context_object_name = "tasks"
+    template_name = "task_list.html"
+    paginate_by = 10
+    ordering = ["-deadline"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(category__name__icontains=query) |
+                Q(status__icontains=query)
+            )
+        return qs
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy("task-list")
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy("task-list")
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    template_name = "task_del.html"
+    success_url = reverse_lazy("task-list")
+
+
+class NoteListView(ListView):
+    model = Note
+    context_object_name = "notes"
+    template_name = "note_list.html"
+    paginate_by = 10
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(content__icontains=query) |
+                Q(task__title__icontains=query)
+            )
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_notes"] = Note.objects.count()
+        context["today"] = timezone.now().date()
+        return context
+
+
+class NoteCreateView(CreateView):
+    model = Note
+    form_class = NoteForm
+    template_name = "note_form.html"
+    success_url = reverse_lazy("note-list")
+
+
+class NoteUpdateView(UpdateView):
+    model = Note
+    form_class = NoteForm
+    template_name = "note_form.html"
+    success_url = reverse_lazy("note-list")
+
+
+class NoteDeleteView(DeleteView):
+    model = Note
+    template_name = "note_del.html"
+    success_url = reverse_lazy("note-list")
+
+
+class SubTaskListView(ListView):
+    model = SubTask
+    context_object_name = "subtasks"
+    template_name = "subtask_list.html"
+    paginate_by = 10
+    ordering = ["title"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(status__icontains=query) |
+                Q(task__title__icontains=query)
+            )
+        return qs
+
+
+class SubTaskCreateView(CreateView):
+    model = SubTask
+    form_class = SubTaskForm
+    template_name = "subtask_form.html"
+    success_url = reverse_lazy("subtask-list")
+
+
+class SubTaskUpdateView(UpdateView):
+    model = SubTask
+    form_class = SubTaskForm
+    template_name = "subtask_form.html"
+    success_url = reverse_lazy("subtask-list")
+
+
+class SubTaskDeleteView(DeleteView):
+    model = SubTask
+    template_name = "subtask_del.html"
+    success_url = reverse_lazy("subtask-list")

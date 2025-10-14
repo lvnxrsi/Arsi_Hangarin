@@ -1,0 +1,195 @@
+body {
+  background-color: #fff7f0;
+  color: #333;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #ffe5cc, #fff7f0);
+}
+
+.sidebar .nav-item a {
+  color: #333;
+}
+
+.sidebar .nav-item a:hover {
+  background: #ffdab3;
+  color: #000;
+  border-radius: 6px;
+}
+
+.main-header {
+  background: linear-gradient(90deg, #ffb84d, #ffcc80);
+  color: #fff;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.logo-header .logo {
+  color: #fff !important;
+}
+
+.navbar .nav-link:hover {
+  color: #ffe5cc !important;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ffb84d, #ffa31a);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #ffa31a, #ff8533);
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: linear-gradient(90deg, #ffe5cc, #ffcc99);
+  border: none;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(90deg, #ffcc99, #ffb366);
+  transform: scale(1.05);
+}
+
+.card,
+.main-panel {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.footer {
+  background: linear-gradient(90deg, #ffe5cc, #fff7f0);
+  color: #333;
+  padding: 10px;
+  border-top: 1px solid #ffdab3;
+}
+
+.card.stats-card {
+  border-radius: 14px;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.25);
+  border: none;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card.stats-card-1 {
+  background: #ffb347;
+}
+
+.card.stats-card-2 {
+  background: #ff9f68;
+}
+
+.card.stats-card-3 {
+  background: #ffcc80;
+  color: #333 !important;
+}
+
+.card.stats-card-4 {
+  background: #ff9966;
+}
+
+.card .card-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card .card-category {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.card .icon {
+  font-size: 40px;
+  opacity: 0.8;
+  margin-left: 10px;
+}
+
+.card.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 140, 0, 0.35);
+}
+
+.card-stats .icon-big i {
+  color: #ffffff !important;
+  font-size: 2.5rem;
+}
+
+.card-category {
+  color: #444 !important;
+  font-weight: 600;
+}
+
+.card-title {
+  color: #222 !important;
+  font-weight: 700;
+}
+
+.card-stats .icon-big i {
+  color: #ffffff !important;
+  font-size: 2.5rem;
+}
+
+/* Add Organization Button */
+.btn-add-org {
+  background: #ff8c1a;              /* orange */
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-add-org:hover {
+  background: #ffb84d;             /* light orange */
+  color: #333;                     /* darker text */
+  transform: scale(1.05);
+}
+
+.btn-add-org:active {
+  background: #e67300;             /* darker when clicked */
+  transform: scale(0.98);
+}
+
+/* Add & Delete column buttons */
+.btn-action {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  width: 100%;                     /* make sure it fits the column */
+  text-align: center;
+}
+
+/* Add button (smaller version) */
+.btn-action.add {
+  background: #ff9933;
+  color: #fff;
+}
+
+.btn-action.add:hover {
+  background: #ffcc80;
+  color: #333;
+  transform: translateY(-2px);
+}
+
+/* Delete button */
+.btn-action.delete {
+  background: #ff6666;
+  color: #fff;
+}
+
+.btn-action.delete:hover {
+  background: #ff9999;
+  color: #222;
+  transform: translateY(-2px);
+}
