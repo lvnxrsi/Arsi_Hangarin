@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
+{% block title %}Notes List{% endblock %}
+
 {% block content %}
 <div class="content">
   <div class="container-fluid">
@@ -7,25 +8,41 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+
           <div class="card-header">
             <div class="card-title">List of Notes</div>
             <div class="card-category">All notes currently tracked</div>
           </div>
           <br />
-          <div class="col-md-12 row">
-            <div class="col-md-6">
-              <form class="navbar-left navbar-form nav-search mr-md-3" action="" method="get">
+
+          <div class="col-md-12 row mb-3">
+            <div class="col-md-4">
+              <form class="navbar-left navbar-form nav-search mr-md-3" method="GET">
                 <div class="input-group">
-                  <input type="text" name="q" placeholder="Search ..." class="form-control" value="{{ request.GET.q }}">
+                  <input type="text" name="q" class="form-control" placeholder="Search notes..." value="{{ request.GET.q }}">
                   <div class="input-group-append">
-                    <span class="input-group-text">
-                      <i class="la la-search search-icon"></i>
-                    </span>
+                    <button class="btn btn-primary" type="submit">Search</button>
                   </div>
                 </div>
               </form>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-4 text-center">
+              <form method="GET" class="form-inline justify-content-center">
+                {% if request.GET.q %}
+                  <input type="hidden" name="q" value="{{ request.GET.q }}">
+                {% endif %}
+                <label for="order" class="mr-2">Sort by:</label>
+                <select name="order" class="form-control" onchange="this.form.submit()">
+                  <option value="-created_at" {% if current_order == "-created_at" %}selected{% endif %}>Newest First</option>
+                  <option value="created_at" {% if current_order == "created_at" %}selected{% endif %}>Oldest First</option>
+                  <option value="task__title" {% if current_order == "task__title" %}selected{% endif %}>Task Title (A-Z)</option>
+                  <option value="-task__title" {% if current_order == "-task__title" %}selected{% endif %}>Task Title (Z-A)</option>
+                </select>
+              </form>
+            </div>
+
+            <div class="col-md-4">
               <div class="pull-right">
                 <a href="{% url 'note-create' %}" class="btn btn-success btn-rounded">Add Note</a>
               </div>
@@ -33,35 +50,67 @@
           </div>
 
           <div class="card-body">
-            <table class="table table-striped mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Task</th>
-                  <th scope="col">Content</th>
-                  <th scope="col">Created At</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for note in notes %}
-                <tr>
-                  <td>{{ note.task.title }}</td>
-                  <td>{{ note.content|truncatechars:50 }}</td>
-                  <td>{{ note.created_at|date:"M d, Y H:i" }}</td>
-                  <td>
-                    <a href="{% url 'note-update' note.id %}" class="btn btn-sm btn-info">Edit</a>
-                    <a href="{% url 'note-delete' note.id %}" class="btn btn-sm btn-danger">Delete</a>
-                  </td>
-                </tr>
-                {% empty %}
-                <tr>
-                  <td colspan="4" class="text-center text-muted">No notes found.</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {% include 'include/pagination.html' %}
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+              <table class="table table-striped mt-3">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Task</th>
+                    <th>Content</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for note in notes %}
+                  <tr>
+                    <td>{{ note.task.title }}</td>
+                    <td>{{ note.content|truncatechars:70 }}</td>
+                    <td>{{ note.created_at|date:"M d, Y H:i" }}</td>
+                    <td>
+                      <a href="{% url 'note-update' note.id %}" class="btn btn-sm btn-primary">Edit</a>
+                      <a href="{% url 'note-delete' note.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4" class="text-center text-muted">No notes found.</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            {% if is_paginated %}
+              <nav class="mt-3">
+                <ul class="pagination justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if current_order %}&order={{ current_order }}{% endif %}">Previous</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                  {% endif %}
+
+                  {% for num in paginator.page_range %}
+                    {% if page_obj.number == num %}
+                      <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if current_order %}&order={{ current_order }}{% endif %}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if page_obj.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if current_order %}&order={{ current_order }}{% endif %}">Next</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
           </div>
+
         </div>
       </div>
     </div>

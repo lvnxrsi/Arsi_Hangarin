@@ -26,10 +26,21 @@
                 </div>
               </form>
             </div>
-            <div class="col-md-6">
-              <div class="pull-right">
-                <a href="{% url 'task-add' %}" class="btn btn-success btn-rounded">Add Task</a>
+
+            <div class="col-md-6 text-right">
+              <div class="dropdown d-inline">
+                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sortMenu">
+                  <a class="dropdown-item" href="?sort=title">Title (A–Z)</a>
+                  <a class="dropdown-item" href="?sort=-title">Title (Z–A)</a>
+                  <a class="dropdown-item" href="?sort=deadline">Deadline (Earliest)</a>
+                  <a class="dropdown-item" href="?sort=-deadline">Deadline (Latest)</a>
+                  <a class="dropdown-item" href="?sort=status">Status</a>
+                </div>
               </div>
+              <a href="{% url 'task-add' %}" class="btn btn-success btn-rounded ml-2">Add Task</a>
             </div>
           </div>
 

@@ -7,25 +7,39 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+
           <div class="card-header">
             <div class="card-title">List of Priorities</div>
-            <div class="card-category">All priorities used for tasks</div>
+            <div class="card-category">All priority levels defined in the system</div>
           </div>
           <br />
-          <div class="col-md-12 row">
-            <div class="col-md-6">
-              <form class="navbar-left navbar-form nav-search mr-md-3" action="" method="get">
+
+          <div class="col-md-12 row mb-3">
+            <div class="col-md-5">
+              <form class="navbar-left navbar-form nav-search mr-md-3" method="GET">
                 <div class="input-group">
-                  <input type="text" name="q" placeholder="Search ..." class="form-control" value="{{ request.GET.q }}">
+                  <input type="text" name="q" class="form-control" placeholder="Search priorities..." value="{{ request.GET.q }}">
                   <div class="input-group-append">
-                    <span class="input-group-text">
-                      <i class="la la-search search-icon"></i>
-                    </span>
+                    <button class="btn btn-primary" type="submit">Search</button>
                   </div>
                 </div>
               </form>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-4">
+              <form method="GET" class="form-inline">
+                {% if request.GET.q %}
+                  <input type="hidden" name="q" value="{{ request.GET.q }}">
+                {% endif %}
+                <label for="order" class="mr-2">Sort by:</label>
+                <select name="order" class="form-control" onchange="this.form.submit()">
+                  <option value="name" {% if current_order == "name" %}selected{% endif %}>A → Z</option>
+                  <option value="-name" {% if current_order == "-name" %}selected{% endif %}>Z → A</option>
+                </select>
+              </form>
+            </div>
+
+            <div class="col-md-3">
               <div class="pull-right">
                 <a href="{% url 'priority-add' %}" class="btn btn-success btn-rounded">Add Priority</a>
               </div>
@@ -33,33 +47,34 @@
           </div>
 
           <div class="card-body">
-            <table class="table table-striped mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Priority Name</th>
-                  <th scope="col">Created At</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for priority in priorities %}
-                <tr>
-                  <td>{{ priority.name }}</td>
-                  <td>{{ priority.created_at|date:"M d, Y" }}</td>
-                  <td>
-                    <a href="{% url 'priority-update' priority.id %}" class="btn btn-sm btn-info">Edit</a>
-                    <a href="{% url 'priority-delete' priority.id %}" class="btn btn-sm btn-danger">Delete</a>
-                  </td>
-                </tr>
-                {% empty %}
-                <tr>
-                  <td colspan="3" class="text-center text-muted">No priorities found.</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+              <table class="table table-striped mt-3">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Priority Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for priority in priorities %}
+                  <tr>
+                    <td>{{ priority.name }}</td>
+                    <td>
+                      <a href="{% url 'priority-update' priority.id %}" class="btn btn-sm btn-primary">Edit</a>
+                      <a href="{% url 'priority-delete' priority.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="2" class="text-center text-muted">No priorities found.</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
             {% include 'include/pagination.html' %}
           </div>
+
         </div>
       </div>
     </div>

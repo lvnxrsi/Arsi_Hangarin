@@ -1,23 +1,141 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Dashboard{% endblock %}
+
 {% block content %}
 <div class="content">
-    <div class="container-fluid">
-        <h4 class="page-title">Home</h4>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Page Title</div>
-                        <div class="card-category">Page Subtitle</div>
-                    </div>
-                    <div class="card-body">
-                        Hello, World
-                    </div>
+  <div class="container-fluid">
+    <h4 class="page-title">Dashboard</h4>
+    <div class="row">
+
+      
+      <div class="col-md-3">
+        <div class="card card-stats card-warning">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-tasks"></i>
                 </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">Total Tasks</p>
+                  <h4 class="card-title">{{ total_tasks }}</h4>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Completed Tasks -->
+      <div class="col-md-3">
+        <div class="card card-stats card-success">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-check-circle"></i>
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">Completed</p>
+                  <h4 class="card-title">{{ completed_tasks }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div class="col-md-3">
+        <div class="card card-stats card-info">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-spinner"></i>
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">In Progress</p>
+                  <h4 class="card-title">{{ in_progress_tasks }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending -->
+      <div class="col-md-3">
+        <div class="card card-stats card-danger">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-hourglass-half"></i>
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">Pending</p>
+                  <h4 class="card-title">{{ pending_tasks }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card card-stats card-primary">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-tags"></i>
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">Categories</p>
+                  <h4 class="card-title">{{ total_categories }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-stats card-secondary">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-5">
+                <div class="icon-big text-center">
+                  <i class="la la-exclamation-triangle"></i>
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-center">
+                <div class="numbers">
+                  <p class="card-category">Priorities</p>
+                  <h4 class="card-title">{{ total_priorities }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 {% endblock %}
-
