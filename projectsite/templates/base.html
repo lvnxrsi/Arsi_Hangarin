@@ -36,7 +36,7 @@
 
                 <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" data-toggle="dropdown">
                             <i class="la la-envelope"></i>
                             <span class="notification">3</span>
                         </a>
@@ -48,7 +48,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" data-toggle="dropdown">
                             <i class="la la-bell"></i>
                             <span class="notification">4</span>
                         </a>
@@ -61,7 +61,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
                             <img src="{% static 'img/profile.jpg' %}" alt="user-img" width="36" class="img-circle">
                             <span>Hizrian</span>
                         </a>
@@ -109,15 +109,9 @@
 
             <div class="collapse" id="adminCollapse">
                 <ul class="nav nav-collapse">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="la la-user"></i> Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="la la-edit"></i> Edit Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="la la-cog"></i> Settings</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="la la-user"></i> Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="la la-edit"></i> Edit Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="la la-cog"></i> Settings</a></li>
                 </ul>
             </div>
 
@@ -128,22 +122,40 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'task-list' %}">
                         <i class="la la-tasks"></i>
                         <p>Tasks</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'note-list' %}">
                         <i class="la la-sticky-note"></i>
                         <p>Notes</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'subtask-list' %}">
                         <i class="la la-list"></i>
                         <p>SubTasks</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category-list' %}">
+                        <i class="la la-tags"></i>
+                        <p>Categories</p>
+                    </a>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'priority-list' %}">
+                        <i class="la la-flag"></i>
+                        <p>Priorities</p>
                     </a>
                 </li>
             </ul>

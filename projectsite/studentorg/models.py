@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -14,6 +15,7 @@ STATUS_CHOICES = [
     ("Completed", "Completed"),
 ]
 
+
 class Category(BaseModel):
     name = models.CharField(max_length=100)
 
@@ -23,6 +25,7 @@ class Category(BaseModel):
 
     def __str__(self):
         return self.name
+
 
 class Priority(BaseModel):
     name = models.CharField(max_length=100)
@@ -54,6 +57,7 @@ class Task(BaseModel):
     def __str__(self):
         return self.title
 
+
 class SubTask(BaseModel):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="subtasks")
     title = models.CharField(max_length=200)
@@ -72,5 +76,4 @@ class Note(BaseModel):
     content = models.TextField()
 
     def __str__(self):
-    
         return (self.content[:47] + "...") if len(self.content) > 50 else self.content

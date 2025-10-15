@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from studentorg.models import Task, Note, SubTask, Category
-from studentorg.forms import TaskForm, NoteForm, SubTaskForm
+from studentorg.models import Task, Note, SubTask, Category, Priority
+from studentorg.forms import TaskForm, NoteForm, SubTaskForm, CategoryForm, PriorityForm
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.db.models import Q
@@ -21,6 +21,7 @@ class HomePageView(ListView):
         context["pending_tasks"] = Task.objects.filter(status="Pending").count()
         context["today"] = timezone.now().date()
         return context
+
 
 
 class TaskListView(ListView):
@@ -61,6 +62,80 @@ class TaskDeleteView(DeleteView):
     model = Task
     template_name = "task_del.html"
     success_url = reverse_lazy("task-list")
+
+
+
+class CategoryListView(ListView):
+    model = Category
+    context_object_name = "categories"
+    template_name = "category_list.html"
+    paginate_by = 10
+    ordering = ["name"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(name__icontains=query)
+        return qs
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "category_form.html"
+    success_url = reverse_lazy("category-list")
+
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "category_form.html"
+    success_url = reverse_lazy("category-list")
+
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = "category_del.html"
+    success_url = reverse_lazy("category-list")
+
+
+
+class PriorityListView(ListView):
+    model = Priority
+    context_object_name = "priorities"
+    template_name = "priority_list.html"
+    paginate_by = 10
+    ordering = ["name"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(name__icontains=query)
+        return qs
+
+
+class PriorityCreateView(CreateView):
+    model = Priority
+    form_class = PriorityForm
+    template_name = "priority_form.html"
+    success_url = reverse_lazy("priority-list")
+
+
+class PriorityUpdateView(UpdateView):
+    model = Priority
+    form_class = PriorityForm
+    template_name = "priority_form.html"
+    success_url = reverse_lazy("priority-list")
+
+
+class PriorityDeleteView(DeleteView):
+    model = Priority
+    template_name = "priority_del.html"
+    success_url = reverse_lazy("priority-list")
+
+
 
 
 class NoteListView(ListView):
@@ -105,6 +180,7 @@ class NoteDeleteView(DeleteView):
     model = Note
     template_name = "note_del.html"
     success_url = reverse_lazy("note-list")
+
 
 
 class SubTaskListView(ListView):
