@@ -12,8 +12,10 @@ from studentorg import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('', include('pwa.urls')),
     path("accounts/", include("allauth.urls")),
     path("", views.HomePageView.as_view(), name="home"),
+    
 
     path("task_list/", TaskListView.as_view(), name="task-list"),
     path("task_list/add/", TaskCreateView.as_view(), name="task-add"),

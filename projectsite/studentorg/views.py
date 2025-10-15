@@ -6,7 +6,6 @@ from django.db.models import Q
 from studentorg.models import Task, Note, SubTask, Category, Priority
 from studentorg.forms import TaskForm, NoteForm, SubTaskForm, CategoryForm, PriorityForm
 
-
 class HomePageView(ListView):
     model = Task
     context_object_name = "tasks"
@@ -25,7 +24,6 @@ class HomePageView(ListView):
         context["today"] = timezone.now().date()
         return context
 
-
 class TaskListView(ListView):
     model = Task
     context_object_name = "tasks"
@@ -36,7 +34,7 @@ class TaskListView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         query = self.request.GET.get("q")
-        order = self.request.GET.get("order", "-deadline")
+        sort = self.request.GET.get("sort", "-deadline")
 
         if query:
             qs = qs.filter(
@@ -47,16 +45,16 @@ class TaskListView(ListView):
             )
 
         valid_fields = ["title", "-title", "deadline", "-deadline", "status", "-status"]
-        if order in valid_fields:
-            qs = qs.order_by(order)
+        if sort in valid_fields:
+            qs = qs.order_by(sort)
 
         return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["current_order"] = self.request.GET.get("order", "-deadline")
+        context["current_sort"] = self.request.GET.get("sort", "-deadline")
+        context["query"] = self.request.GET.get("q", "")
         return context
-
 
 class TaskCreateView(CreateView):
     model = Task
@@ -64,19 +62,16 @@ class TaskCreateView(CreateView):
     template_name = "task_form.html"
     success_url = reverse_lazy("task-list")
 
-
 class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "task_form.html"
     success_url = reverse_lazy("task-list")
 
-
 class TaskDeleteView(DeleteView):
     model = Task
     template_name = "task_del.html"
     success_url = reverse_lazy("task-list")
-
 
 class NoteListView(ListView):
     model = Note
@@ -109,13 +104,11 @@ class NoteListView(ListView):
         context["today"] = timezone.now().date()
         return context
 
-
 class NoteCreateView(CreateView):
     model = Note
     form_class = NoteForm
     template_name = "note_form.html"
     success_url = reverse_lazy("note-list")
-
 
 class NoteUpdateView(UpdateView):
     model = Note
@@ -123,12 +116,10 @@ class NoteUpdateView(UpdateView):
     template_name = "note_form.html"
     success_url = reverse_lazy("note-list")
 
-
 class NoteDeleteView(DeleteView):
     model = Note
     template_name = "note_del.html"
     success_url = reverse_lazy("note-list")
-
 
 class SubTaskListView(ListView):
     model = SubTask
@@ -160,13 +151,11 @@ class SubTaskListView(ListView):
         context["current_order"] = self.request.GET.get("order", "title")
         return context
 
-
 class SubTaskCreateView(CreateView):
     model = SubTask
     form_class = SubTaskForm
     template_name = "subtask_form.html"
     success_url = reverse_lazy("subtask-list")
-
 
 class SubTaskUpdateView(UpdateView):
     model = SubTask
@@ -174,12 +163,10 @@ class SubTaskUpdateView(UpdateView):
     template_name = "subtask_form.html"
     success_url = reverse_lazy("subtask-list")
 
-
 class SubTaskDeleteView(DeleteView):
     model = SubTask
     template_name = "subtask_del.html"
     success_url = reverse_lazy("subtask-list")
-
 
 class CategoryListView(ListView):
     model = Category
@@ -207,13 +194,11 @@ class CategoryListView(ListView):
         context["current_order"] = self.request.GET.get("order", "name")
         return context
 
-
 class CategoryCreateView(CreateView):
     model = Category
     form_class = CategoryForm
     template_name = "category_form.html"
     success_url = reverse_lazy("category-list")
-
 
 class CategoryUpdateView(UpdateView):
     model = Category
@@ -221,12 +206,10 @@ class CategoryUpdateView(UpdateView):
     template_name = "category_form.html"
     success_url = reverse_lazy("category-list")
 
-
 class CategoryDeleteView(DeleteView):
     model = Category
     template_name = "category_del.html"
     success_url = reverse_lazy("category-list")
-
 
 class PriorityListView(ListView):
     model = Priority
@@ -255,20 +238,17 @@ class PriorityListView(ListView):
         context["total_priorities"] = Priority.objects.count()
         return context
 
-
 class PriorityCreateView(CreateView):
     model = Priority
     form_class = PriorityForm
     template_name = "priority_form.html"
     success_url = reverse_lazy("priority-list")
 
-
 class PriorityUpdateView(UpdateView):
     model = Priority
     form_class = PriorityForm
     template_name = "priority_form.html"
     success_url = reverse_lazy("priority-list")
-
 
 class PriorityDeleteView(DeleteView):
     model = Priority

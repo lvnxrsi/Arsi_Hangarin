@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import socket
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,9 +27,14 @@ INSTALLED_APPS = [
 
     'studentorg',
     'widget_tweaks',
+    'pwa',
 ]
 
-SITE_ID = 2
+
+if "pythonanywhere" in socket.gethostname():
+    SITE_ID = 3  
+else:
+    SITE_ID = 2  # local site
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -101,3 +107,26 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+
+PWA_APP_NAME = 'ProjectSite'
+PWA_APP_DESCRIPTION = "A Progressive Web App version of ProjectSite"
+PWA_APP_THEME_COLOR = '#0A0A0A'
+PWA_APP_BACKGROUND_COLOR = "#FFFFFF"
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'portrait'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {'src': '/static/img/icon-192.png', 'sizes': '192x192'},
+    {'src': '/static/img/icon-512.png', 'sizes': '512x512'}
+]
+PWA_APP_ICONS_APPLE = [
+    {'src': '/static/img/icon-192.png', 'sizes': '192x192'},
+    {'src': '/static/img/icon-512.png', 'sizes': '512x512'}
+]
+PWA_APP_DIR = 'ltr'
+
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static', 'js', 'serviceworker.js')

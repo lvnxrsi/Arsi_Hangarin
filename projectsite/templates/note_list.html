@@ -34,10 +34,10 @@
                 {% endif %}
                 <label for="order" class="mr-2">Sort by:</label>
                 <select name="order" class="form-control" onchange="this.form.submit()">
-                  <option value="-created_at" {% if current_order == "-created_at" %}selected{% endif %}>Newest First</option>
-                  <option value="created_at" {% if current_order == "created_at" %}selected{% endif %}>Oldest First</option>
-                  <option value="task__title" {% if current_order == "task__title" %}selected{% endif %}>Task Title (A-Z)</option>
-                  <option value="-task__title" {% if current_order == "-task__title" %}selected{% endif %}>Task Title (Z-A)</option>
+                  <option value="-created_at" {% if current_order == "-created_at" %}selected{% endif %}>Newest</option>
+                  <option value="created_at" {% if current_order == "created_at" %}selected{% endif %}>Oldest</option>
+                  <option value="task__title" {% if current_order == "task__title" %}selected{% endif %}>A-Z</option>
+                  <option value="-task__title" {% if current_order == "-task__title" %}selected{% endif %}>Z-A</option>
                 </select>
               </form>
             </div>
