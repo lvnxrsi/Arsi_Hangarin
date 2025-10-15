@@ -1,0 +1,62 @@
+{% load i18n %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Hangarin | Confirm Google Login</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" />
+<style>
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+    font-family: 'Nunito', sans-serif;
+}
+.auth-card {
+    max-width: 480px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    text-align: center;
+}
+h3 {
+    color: #dc3545;
+    font-weight: 700;
+}
+.btn-primary {
+    background-color: #dc3545;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #c82333;
+}
+.btn-outline-secondary:hover {
+    background-color: #f1f1f1;
+}
+.logo {
+    font-weight: 800;
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+</style>
+</head>
+<body>
+<div class="auth-card">
+    <div class="logo">Hangarin</div>
+    <h3 class="mb-4">Confirm Sign In</h3>
+    <p class="mb-3">You are about to sign in using your <strong>{{ provider.name }}</strong> account.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-block mb-3">Continue with {{ provider.name }}</button>
+    </form>
+    <a href="{% url 'account_login' %}" class="btn btn-outline-secondary btn-block">Cancel</a>
+</div>
+</body>
+</html>
