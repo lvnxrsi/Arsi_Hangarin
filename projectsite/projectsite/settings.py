@@ -2,22 +2,32 @@ from pathlib import Path
 import os
 import socket
 
+# -------------------------------------------------------------
+# BASE SETTINGS
+# -------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
 
 # -------------------------------------------------------------
-# ENVIRONMENT DETECTION
+# ENVIRONMENT DETECTION (WORKS FOR BOTH LOCAL & PYTHONANYWHERE)
 # -------------------------------------------------------------
-IS_PYTHONANYWHERE = "pythonanywhere" in socket.gethostname()
+# PythonAnywhere does not always include "pythonanywhere" in hostname,
+# so we check environment variables as well.
+hostname = socket.gethostname()
+is_pythonanywhere = (
+    'pythonanywhere' in hostname
+    or os.environ.get('PYTHONANYWHERE_DOMAIN')
+    or 'livewebapp' in hostname
+)
 
-if IS_PYTHONANYWHERE:
+if is_pythonanywhere:
     DEBUG = False
-    SITE_ID = 3  # luvnaarsi.pythonanywhere.com
+    SITE_ID = 3
     ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com']
 else:
     DEBUG = True
-    SITE_ID = 2  # local: 127.0.0.1:8000
+    SITE_ID = 2
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # -------------------------------------------------------------
