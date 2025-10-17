@@ -6,10 +6,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
 
-DEBUG = True
+# -------------------------------------------------------------
+# ENVIRONMENT DETECTION
+# -------------------------------------------------------------
+IS_PYTHONANYWHERE = "pythonanywhere" in socket.gethostname()
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'luvnaarsi.pythonanywhere.com']
+if IS_PYTHONANYWHERE:
+    DEBUG = False
+    SITE_ID = 3  # luvnaarsi.pythonanywhere.com
+    ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com']
+else:
+    DEBUG = True
+    SITE_ID = 2  # local: 127.0.0.1:8000
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+# -------------------------------------------------------------
+# DJANGO CORE CONFIG
+# -------------------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,22 +32,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    # Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
 
+    # Your apps
     'studentorg',
     'widget_tweaks',
     'pwa',
 ]
-
-
-if "pythonanywhere" in socket.gethostname():
-    SITE_ID = 3  
-else:
-    SITE_ID = 2  # local site
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -72,6 +81,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'projectsite.wsgi.application'
 
+# -------------------------------------------------------------
+# DATABASE
+# -------------------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -79,6 +91,9 @@ DATABASES = {
     }
 }
 
+# -------------------------------------------------------------
+# AUTH + ACCOUNT SETTINGS
+# -------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -108,7 +123,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-
+# -------------------------------------------------------------
+# PWA CONFIG
+# -------------------------------------------------------------
 PWA_APP_NAME = 'ProjectSite'
 PWA_APP_DESCRIPTION = "A Progressive Web App version of ProjectSite"
 PWA_APP_THEME_COLOR = '#0A0A0A'
@@ -120,13 +137,11 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {'src': '/static/img/icon-192.png', 'sizes': '192x192'},
-    {'src': '/static/img/icon-512.png', 'sizes': '512x512'}
+    {'src': '/static/img/icon-512.png', 'sizes': '512x512'},
 ]
 PWA_APP_ICONS_APPLE = [
     {'src': '/static/img/icon-192.png', 'sizes': '192x192'},
-    {'src': '/static/img/icon-512.png', 'sizes': '512x512'}
+    {'src': '/static/img/icon-512.png', 'sizes': '512x512'},
 ]
 PWA_APP_DIR = 'ltr'
-
-
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static', 'js', 'serviceworker.js')
