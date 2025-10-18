@@ -5,16 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
 
-ENVIRONMENT = os.environ.get("DJANGO_ENV", "development")
-
-if ENVIRONMENT == "production":
-    DEBUG = False
-    SITE_ID = 3
-    ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com', 'www.luvnaarsi.pythonanywhere.com']
-else:
-    DEBUG = True
-    SITE_ID = 2
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = False
+SITE_ID = 3
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'luvnaarsi.pythonanywhere.com', 'www.luvnaarsi.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
