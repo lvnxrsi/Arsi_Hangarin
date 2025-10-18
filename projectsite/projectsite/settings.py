@@ -2,9 +2,11 @@ from pathlib import Path
 import os
 import socket
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
+
 
 IS_PYTHONANYWHERE = "pythonanywhere" in socket.gethostname()
 
