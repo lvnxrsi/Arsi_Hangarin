@@ -6,11 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>{% block title %}Hangarin{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" />
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900">
     <link rel="stylesheet" href="{% static 'css/ready.css' %}">
     <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#ff99bb">
+    {% progressive_web_app_meta %}
+
     <style>
         body, .navbar, .sidebar, .nav-link, .dropdown-menu, .footer { font-family: 'Comic Neue', cursive !important; }
         body { background-color: #fff0f6; }
@@ -29,12 +36,9 @@
         a:hover { color: #ff66aa !important; }
         .caret, .la, .ti, .fa { color: #d6336c !important; }
     </style>
-    {% progressive_web_app_meta %}
 </head>
 <body>
 <div class="wrapper">
-
-    <!-- MAIN HEADER -->
     <div class="main-header">
         <div class="logo-header">
             <a href="{% url 'home' %}" class="logo">Hangarin Dashboard</a>
@@ -55,7 +59,6 @@
                         </div>
                     </div>
                 </form>
-
                 <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" data-toggle="dropdown">
@@ -63,12 +66,11 @@
                             <span class="notification">3</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
-                            <li><a class="dropdown-item" href="#">New message from Luvna</a></li>
-                            <li><a class="dropdown-item" href="#">Scott sent a message</a></li>
+                            <li><a class="dropdown-item" href="#">Luvna added you as a friend</a></li>
+                            <li><a class="dropdown-item" href="#">Someone sent a message</a></li>
                             <li><a class="dropdown-item" href="#">Admin reminder</a></li>
                         </ul>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" data-toggle="dropdown">
                             <i class="la la-bell"></i>
@@ -81,17 +83,16 @@
                             <li><a class="dropdown-item" href="#">System update</a></li>
                         </ul>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
-                            <img src="{% static 'img/profile.jpg' %}" alt="user-img" width="36" class="img-circle">
+                            <img src="{% static 'img/mainprofile.jpg' %}" alt="user-img" width="36" class="img-circle">
                             <span>{{ request.user.username|default:"Guest" }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
                                 <div class="user-box">
                                     <div class="u-img">
-                                        <img src="{% static 'img/profile.jpg' %}" alt="user">
+                                        <img src="{% static 'img/mainprofile.jpg' %}" alt="user">
                                     </div>
                                     <div class="u-text">
                                         <h4>{{ request.user.username|default:"Guest" }}</h4>
@@ -117,12 +118,11 @@
         </nav>
     </div>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="scrollbar-inner sidebar-wrapper">
             <div class="user">
                 <div class="photo">
-                    <img src="{% static 'img/profile.jpg' %}" alt="user-photo">
+                    <img src="{% static 'img/mainprofile.jpg' %}" alt="user-photo">
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#adminCollapse" aria-expanded="false">
@@ -134,7 +134,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="collapse" id="adminCollapse">
                 <ul class="nav nav-collapse">
                     <li class="nav-item"><a class="nav-link" href="#"><i class="la la-user"></i> Profile</a></li>
@@ -142,7 +141,6 @@
                     <li class="nav-item"><a class="nav-link" href="#"><i class="la la-cog"></i> Settings</a></li>
                 </ul>
             </div>
-
             <ul class="nav">
                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="la la-dashboard"></i><p>Dashboard</p></a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'task-list' %}"><i class="la la-tasks"></i><p>Tasks</p></a></li>
@@ -154,12 +152,10 @@
         </div>
     </div>
 
-    <!-- MAIN PANEL -->
     <div class="main-panel">
         {% block content %}{% endblock %}
     </div>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container-fluid">
             <nav class="pull-left">
@@ -175,7 +171,6 @@
     </footer>
 </div>
 
-<!-- Scripts -->
 <script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
 <script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
 <script src="{% static 'js/core/popper.min.js' %}"></script>
@@ -186,12 +181,11 @@
 <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
 <script src="{% static 'js/ready.min.js' %}"></script>
 
-<!-- Service Worker Registration -->
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/static/js/serviceworker.js', { scope: '/static/js/' })
-        .then(reg => console.log('Service Worker registered with scope:', reg.scope))
+        navigator.serviceWorker.register('{% static "js/serviceworker.js" %}')
+        .then(reg => console.log('Service Worker registered:', reg.scope))
         .catch(err => console.error('Service Worker registration failed:', err));
     });
 }

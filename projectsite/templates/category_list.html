@@ -1,84 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="content">
+<div class="content category-page">
   <div class="container-fluid">
-    <h4 class="page-title">Categories</h4>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
+    <h2 class="page-title text-center"> Categories </h2>
+    <p class="subtitle text-center">Organize your tasks into cute little folders!</p>
 
-          <div class="card-header">
-            <div class="card-title">List of Categories</div>
-            <div class="card-category">All categories currently available</div>
-          </div>
-          <br />
+    <div class="toolbar d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <form method="GET" class="search-bar d-flex mb-2">
+        <input type="text" name="q" class="form-control pastel-input" placeholder="🔍 Search categories..." value="{{ request.GET.q }}">
+        <button class="btn pastel-yellow-btn ml-2" type="submit">Search</button>
+      </form>
 
-          <div class="col-md-12 row mb-3">
-            <div class="col-md-5">
-              <form class="navbar-left navbar-form nav-search mr-md-3" method="GET">
-                <div class="input-group">
-                  <input type="text" name="q" class="form-control" placeholder="Search categories..." value="{{ request.GET.q }}">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                  </div>
-                </div>
-              </form>
-            </div>
+      <form method="GET" class="sort-bar mb-2">
+        {% if request.GET.q %}
+          <input type="hidden" name="q" value="{{ request.GET.q }}">
+        {% endif %}
+        <select name="order" class="form-control pastel-input" onchange="this.form.submit()">
+          <option value="name" {% if current_order == 'name' %}selected{% endif %}>A → Z</option>
+          <option value="-name" {% if current_order == '-name' %}selected{% endif %}>Z → A</option>
+        </select>
+      </form>
 
-            <div class="col-md-4">
-              <form method="GET" class="form-inline">
-                {% if request.GET.q %}
-                  <input type="hidden" name="q" value="{{ request.GET.q }}">
-                {% endif %}
-                <label for="order" class="mr-2">Sort by:</label>
-                <select name="order" class="form-control" onchange="this.form.submit()">
-                  <option value="name" {% if current_order == "name" %}selected{% endif %}>A → Z</option>
-                  <option value="-name" {% if current_order == "-name" %}selected{% endif %}>Z → A</option>
-                </select>
-              </form>
-            </div>
-
-            <div class="col-md-3">
-              <div class="pull-right">
-                <a href="{% url 'category-add' %}" class="btn btn-success btn-rounded">Add Category</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-              <table class="table table-striped mt-3">
-                <thead class="thead-dark">
-                  <tr>
-                    <th>Category Name</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for category in categories %}
-                  <tr>
-                    <td>{{ category.name }}</td>
-                    <td>
-                      <a href="{% url 'category-update' category.id %}" class="btn btn-sm btn-primary">Edit</a>
-                      <a href="{% url 'category-delete' category.id %}" class="btn btn-sm btn-danger">Delete</a>
-                    </td>
-                  </tr>
-                  {% empty %}
-                  <tr>
-                    <td colspan="2" class="text-center text-muted">No categories found.</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-
-            {% include 'include/pagination.html' %}
-          </div>
-
-        </div>
-      </div>
+      <a href="{% url 'category-add' %}" class="btn pastel-pink-btn mb-2">＋ Add Category</a>
     </div>
+
+    <div class="note-container">
+      {% for category in categories %}
+        <div class="note-card">
+          <h5 class="note-title">📁 {{ category.name }}</h5>
+          <div class="note-actions">
+            <a href="{% url 'category-update' category.id %}" class="btn small-btn edit-btn">✏️ Edit</a>
+            <a href="{% url 'category-delete' category.id %}" class="btn small-btn delete-btn">🗑️ Delete</a>
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-state text-center">
+          <p>No categories found 💭</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% include 'include/pagination.html' %}
   </div>
 </div>
 {% endblock %}

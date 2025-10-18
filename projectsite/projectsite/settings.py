@@ -6,23 +6,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
 
-# -------------------------------------------------------------
-# ENVIRONMENT DETECTION
-# -------------------------------------------------------------
 IS_PYTHONANYWHERE = "pythonanywhere" in socket.gethostname()
 
 if IS_PYTHONANYWHERE:
     DEBUG = False
-    SITE_ID = 3  # luvnaarsi.pythonanywhere.com
+    SITE_ID = 3
     ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com']
 else:
     DEBUG = True
-    SITE_ID = 2  # local: 127.0.0.1:8000
+    SITE_ID = 2
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-# -------------------------------------------------------------
-# DJANGO CORE CONFIG
-# -------------------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,15 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
-    # Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
-
-    # Your apps
     'studentorg',
     'widget_tweaks',
     'pwa',
@@ -81,9 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'projectsite.wsgi.application'
 
-# -------------------------------------------------------------
-# DATABASE
-# -------------------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -91,9 +78,6 @@ DATABASES = {
     }
 }
 
-# -------------------------------------------------------------
-# AUTH + ACCOUNT SETTINGS
-# -------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -123,13 +107,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-# -------------------------------------------------------------
-# PWA CONFIG
-# -------------------------------------------------------------
-PWA_APP_NAME = 'ProjectSite'
-PWA_APP_DESCRIPTION = "A Progressive Web App version of ProjectSite"
-PWA_APP_THEME_COLOR = '#0A0A0A'
-PWA_APP_BACKGROUND_COLOR = "#FFFFFF"
+PWA_APP_NAME = 'Hangarin'
+PWA_APP_DESCRIPTION = "Offline access for Hangarin Dashboard"
+PWA_APP_THEME_COLOR = '#ff99bb'
+PWA_APP_BACKGROUND_COLOR = "#ffe6f0"
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'portrait'

@@ -126,12 +126,12 @@ class SubTaskListView(ListView):
     context_object_name = "subtasks"
     template_name = "subtask_list.html"
     paginate_by = 10
-    ordering = ["title"]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         qs = super().get_queryset()
         query = self.request.GET.get("q")
-        order = self.request.GET.get("order", "title")
+        order = self.request.GET.get("order", "-created_at")
 
         if query:
             qs = qs.filter(
@@ -140,7 +140,7 @@ class SubTaskListView(ListView):
                 | Q(task__title__icontains=query)
             )
 
-        valid_fields = ["title", "-title", "status", "-status", "task__title", "-task__title"]
+        valid_fields = ["created_at", "-created_at", "title", "-title", "status", "-status", "task__title", "-task__title"]
         if order in valid_fields:
             qs = qs.order_by(order)
 
@@ -148,7 +148,7 @@ class SubTaskListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["current_order"] = self.request.GET.get("order", "title")
+        context["current_order"] = self.request.GET.get("order", "-created_at")
         return context
 
 class SubTaskCreateView(CreateView):
