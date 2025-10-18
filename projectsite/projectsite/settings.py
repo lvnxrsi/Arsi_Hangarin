@@ -7,7 +7,11 @@ SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9
 
 DEBUG = False
 SITE_ID = 3
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'luvnaarsi.pythonanywhere.com', 'www.luvnaarsi.pythonanywhere.com']
+
+ALLOWED_HOSTS = [
+    'luvnaarsi.pythonanywhere.com',
+    'www.luvnaarsi.pythonanywhere.com',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
