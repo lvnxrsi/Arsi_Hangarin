@@ -1,19 +1,16 @@
 from pathlib import Path
 import os
-import socket
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hangarin-!2d#4+g_jv@o%u3q8m$7(12h)6w@r_x5+!c&9@&b9jz8g'
 
+ENVIRONMENT = os.environ.get("DJANGO_ENV", "development")
 
-IS_PYTHONANYWHERE = "pythonanywhere" in socket.gethostname()
-
-if IS_PYTHONANYWHERE:
+if ENVIRONMENT == "production":
     DEBUG = False
     SITE_ID = 3
-    ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com']
+    ALLOWED_HOSTS = ['luvnaarsi.pythonanywhere.com', 'www.luvnaarsi.pythonanywhere.com']
 else:
     DEBUG = True
     SITE_ID = 2
