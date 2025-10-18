@@ -1,4 +1,4 @@
-const CACHE_NAME = 'projectsite-cache-v2';
+const CACHE_NAME = 'projectsite-cache-v3';
 
 const urlsToCache = [
     '/',  
@@ -7,21 +7,28 @@ const urlsToCache = [
     '/subtask-list/',
     '/category-list/',
     '/priority-list/',
+    
     '/static/css/bootstrap.min.css',
     '/static/css/ready.css',
     '/static/css/demo.css',
     '/static/css/custom.css',
+    
     '/static/js/main.js',
     '/static/js/ready.min.js',
     '/static/js/core/jquery.3.2.1.min.js',
     '/static/js/core/popper.min.js',
     '/static/js/core/bootstrap.min.js',
+    
     '/static/img/icon-192.png',
     '/static/img/icon-512.png',
-    '/static/img/mainprofile.jpg'
+    '/static/img/mainprofile.jpg',
+    
+    '/static/fonts/Roboto-Regular.woff2',
+    '/static/fonts/Roboto-Bold.woff2',
+    '/static/fonts/Roboto-Italic.woff2'
 ];
 
-// Install event
+
 self.addEventListener('install', (event) => {
     console.log('[Service Worker] Install');
     event.waitUntil(
@@ -34,7 +41,7 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// Activate event
+
 self.addEventListener('activate', (event) => {
     console.log('[Service Worker] Activate');
     event.waitUntil(
@@ -51,32 +58,32 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request)
-                    .then((networkResponse) => {
-                        // Optionally cache new requests dynamically
-                        if (event.request.url.startsWith(self.location.origin)) {
-                            return caches.open(CACHE_NAME).then((cache) => {
-                                cache.put(event.request, networkResponse.clone());
-                                return networkResponse;
-                            });
-                        } else {
+        caches.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+
+            return fetch(event.request)
+                .then((networkResponse) => {
+                    
+                    if (event.request.url.startsWith(self.location.origin)) {
+                        return caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(event.request, networkResponse.clone());
                             return networkResponse;
-                        }
-                    })
-                    .catch(() => {
-                        // Fallback for navigation requests
-                        if (event.request.mode === 'navigate') {
-                            return caches.match('/');
-                        }
-                    });
-            })
+                        });
+                    } else {
+                        return networkResponse;
+                    }
+                })
+                .catch(() => {
+                    
+                    if (event.request.mode === 'navigate') {
+                        return caches.match('/');
+                    }
+                });
+        })
     );
 });
