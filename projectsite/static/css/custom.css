@@ -1,11 +1,9 @@
-/* 🌸 General Theme */
 body {
   background-color: #ffe6f0;
   font-family: "Comic Neue", cursive !important;
   color: #d6336c;
 }
 
-/* 🌸 Navbar, Sidebar, Footer */
 .navbar,
 .logo-header,
 .footer {
@@ -41,7 +39,6 @@ body {
   color: #d6336c !important;
 }
 
-/* 🌸 Cards and Buttons */
 .card,
 .dropdown-menu,
 .user-box {
@@ -71,7 +68,6 @@ body {
   transform: scale(1.05);
 }
 
-/* 🌸 Notes (used in both tasks and sticky notes) */
 .note-box {
   background-color: #fff8fb;
   border: 2px solid #ffd6e0;
@@ -109,7 +105,6 @@ body {
   gap: 5px;
 }
 
-/* 🌸 Sticky Note Tasks - Vertical Layout */
 .task-sections {
   margin-top: 20px;
 }
@@ -192,7 +187,6 @@ body {
   gap: 10px;
 }
 
-/* 🌸 Edit & Delete Buttons */
 .btn-edit {
   background-color: #ffec8b;
   border: none;
@@ -223,7 +217,6 @@ body {
   transform: scale(1.05);
 }
 
-/* 🌸 Pagination */
 .pagination {
   justify-content: center;
   margin-top: 20px;
@@ -249,7 +242,6 @@ body {
   transform: scale(1.05);
 }
 
-/* 🌸 Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -264,7 +256,6 @@ body {
   background: #ff99bb;
 }
 
-/* 🌸 Note List Layout (Grid Style for note_list.html) */
 .note-list-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -287,6 +278,7 @@ body {
   transform: scale(1.02);
   box-shadow: 5px 5px 0 #ffb6c1;
 }
+
 .subtask-box {
   background-color: #fff8f2;
   border: 2px solid #ffd6e0;
@@ -406,6 +398,7 @@ body {
 .btn-search:hover {
   background-color: #ff8da1;
 }
+
 .category-page {
   background-color: #ffe6ef;
   padding: 30px;
@@ -500,6 +493,7 @@ body {
   font-size: 1.1rem;
   padding: 20px;
 }
+
 .priority-page {
   background-color: #fff0f5;
   padding: 30px;
@@ -594,7 +588,7 @@ body {
   font-size: 1.1rem;
   padding: 20px;
 }
-/* Unified Title Style for All Pages */
+
 .page-title {
   font-family: 'Poppins', cursive;
   font-weight: 700;
@@ -611,7 +605,6 @@ body {
   margin-bottom: 25px;
 }
 
-/* Card consistency across Task, Note, and SubTask pages */
 .card {
   border-radius: 20px;
   background-color: #fffdf5;
@@ -661,7 +654,7 @@ body {
 .btn-success:hover {
   background-color: #ffe066 !important;
 }
-/* 🎀 Cute Page Title Box Design 🎀 */
+
 .title-box {
   background: linear-gradient(135deg, #ffe6f0, #fff5b3);
   border: 3px solid #ffb6c1;
@@ -683,7 +676,6 @@ body {
   box-shadow: 0 6px 15px rgba(255, 160, 190, 0.5);
 }
 
-/* Subtitle below the title box */
 .subtitle {
   text-align: center;
   font-family: "Comic Neue", cursive;
@@ -694,7 +686,6 @@ body {
   margin-bottom: 25px;
 }
 
-/* Optionally give a small bounce animation when loading */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
@@ -703,7 +694,7 @@ body {
 .title-box {
   animation: floaty 2s ease-in-out infinite;
 }
-/* 🌸 Unified Cute Title Box for All Pages */
+
 .title-section {
   text-align: center;
   margin-bottom: 30px;
@@ -739,9 +730,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* 🌸 Gentle Floating Animation */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
-
